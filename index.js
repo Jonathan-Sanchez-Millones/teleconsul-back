@@ -6,7 +6,7 @@ var port=3700;
 
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/Hospital',{
+mongoose.connect('mongodb://157.230.230.23/Hospital',{
     useNewUrlParser:true,
     useUnifiedTopology:true
 })
