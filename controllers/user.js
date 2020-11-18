@@ -31,6 +31,30 @@ var controller = {
         })
         res.json({token})
         }
+    },
+
+    getUserByToken: async function(req,res){
+        
+        const token=req.headers["x-access-token"];
+        console.log(token);
+        const decoded = jwt.verify(token,config.SECRET)
+        
+        req.userId=decoded.id
+        const rol=decoded.rol[0];
+        req.rol=rol;
+        console.log(req.doctorId);
+        console.log(rol);
+
+        if(rol=="doctor"){
+            const doctor=await Doctor.findById(req.userId);
+            res.status(200).json(doctor)
+        }
+        else{
+            const paciente=await Paciente.findById(req.userId);
+            res.status(200).json(paciente)
+        }
+        
+        
     }
 };
 
