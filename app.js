@@ -4,7 +4,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser=require('cookie-parser');
 var session=require('express-session');
-
+var cors=require('cors');
 var app = express();
 
 //cargar archivos de rutas
@@ -22,6 +22,7 @@ app.use(session({
     resave:true,
     saveUninitialized:true
 }));
+app.use(cors());
 
 
 
