@@ -10,6 +10,7 @@ var controller = {
     login: async function (req,res){
         
         const{email,password}=req.body;
+        console.log(email,password);
         const doctor= await Doctor.findOne({email,password})
         if(!doctor){
 

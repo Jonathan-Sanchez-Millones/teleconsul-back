@@ -2,11 +2,21 @@
 
 var mongoose = require('mongoose');
 var app= require('./app');
+var io = require('socket.io');
 var port=3700;
 
+const mensajes = [];
+
+/*io.on('connection',(socket)=>{
+    socket.on('send-message', (data)=>{
+        mensajes.push(data)
+        socket.emit('text-event',mensajes)
+    })
+
+})*/
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://157.230.230.23/Hospital',{
+mongoose.connect('mongodb+srv://Cacarlsen:blackwin@cluster0.ocl5l.mongodb.net/Hospital',{
     useNewUrlParser:true,
     useUnifiedTopology:true
 })
