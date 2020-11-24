@@ -1,22 +1,19 @@
 'use strict'
 
+require('dotenv').config();
+
 var mongoose = require('mongoose');
 var app= require('./app');
-var io = require('socket.io');
+var server = require('http').Server(app);
+var SocketIO = require('socket.io');
+var io = SocketIO(server);
 var port=3700;
-
 const mensajes = [];
 
-/*io.on('connection',(socket)=>{
-    socket.on('send-message', (data)=>{
-        mensajes.push(data)
-        socket.emit('text-event',mensajes)
-    })
-
-})*/
+console.log(process.env.MONGODB_URI);
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb+srv://Cacarlsen:blackwin@cluster0.ocl5l.mongodb.net/Hospital',{
+mongoose.connect(process.env.MONGODB_URI,{
     useNewUrlParser:true,
     useUnifiedTopology:true
 })
@@ -25,9 +22,18 @@ mongoose.connect('mongodb+srv://Cacarlsen:blackwin@cluster0.ocl5l.mongodb.net/Ho
             console.log("Conexion a la bd hospital establecida exitosamente");
 
             //Creacion del servidor
-            app.listen(port,()=>{
+            server.listen(port,()=>{
 
                 console.log("Servidor corriendo en el puerto 3700");
             })
         })
         .catch(err=> console.log(err));
+
+        io.on('connection',(socket)=>{
+    
+            socket.on('send-message', (data)=>{
+                mensajes.push(data)
+                socket.emit('text-event',mensajes)
+            })      
+        })
+
