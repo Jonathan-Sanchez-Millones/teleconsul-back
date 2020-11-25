@@ -31,7 +31,7 @@ mongoose.connect(process.env.MONGODB_URI,{
     
             socket.on('send-message', (data)=>{
                 mensajes.push(data)
-                socket.emit('text-event',mensajes)
+                socket.emit('send-message',mensajes)
             })      
         })
 

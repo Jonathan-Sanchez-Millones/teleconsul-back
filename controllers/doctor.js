@@ -1,9 +1,10 @@
 'use strict'
 
-const Doctor=require('../models/doctor');
 const DoctorPaciente=require('../models/doctor_paciente');
-const paciente = require('../models/paciente');
 var _ = require('underscore');
+const jwt=require('jsonwebtoken');
+const config=require('../config');
+
 
 var controller = {
     home: function(req,res){
@@ -21,7 +22,15 @@ var controller = {
         
     },
     getPacientesByDoctor:async function(req,res){
-        const d_pacientes= await DoctorPaciente.find({'doctor':req.params.doctorId})
+
+        const token = req.headers["x-access-token"];
+        const decoded = jwt.verify(token,config.SECRET)
+        var id_doctor_logeado=decoded.id;
+        var id_doctor_a_buscar=req.params.doctorId;
+
+        if(id_doctor_logeado==id_doctor_a_buscar){
+
+        const d_pacientes= await DoctorPaciente.find({'doctor':id_doctor_a_buscar})
         .select({ "paciente": 1, "_id": 0})
         .populate('paciente',{"email":0,"password":0,"_id":0,"roles":0})
         .lean().exec(function (err, result) {
@@ -44,7 +53,11 @@ var controller = {
                 res.status(200).json(pacientes);
             }
         });
-        
+        }
+
+        else{
+            res.status(403).json({message:"Solo puedes ver tus pacientes"});
+        }
     }
 };
 
