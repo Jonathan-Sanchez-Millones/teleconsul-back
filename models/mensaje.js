@@ -13,8 +13,8 @@ var MensajeSchema = Schema({
         type: Schema.ObjectId,
         ref: 'Paciente'
      },
-    dir: int,
-    mensaje: String,
+    dir: Number,
+    texto: String,
     viewed: String,
     created_at: String
 });

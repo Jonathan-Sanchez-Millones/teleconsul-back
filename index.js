@@ -6,7 +6,11 @@ var mongoose = require('mongoose');
 var app= require('./app');
 var server = require('http').Server(app);
 var SocketIO = require('socket.io');
-var io = SocketIO(server);
+var io = SocketIO(server,{
+    cors:{
+        origins: '*',
+    }
+});
 var port=3700;
 const mensajes = [];
 

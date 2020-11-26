@@ -26,7 +26,9 @@ var controller = {
         const token = req.headers["x-access-token"];
         const decoded = jwt.verify(token,config.SECRET)
         var id_doctor_logeado=decoded.id;
+        console.log("mira1:"+id_doctor_logeado);
         var id_doctor_a_buscar=req.params.doctorId;
+        console.log("mira2:"+id_doctor_a_buscar);
 
         if(id_doctor_logeado==id_doctor_a_buscar){
 

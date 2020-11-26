@@ -40,18 +40,17 @@ var controller = {
         console.log(token);
         const decoded = jwt.verify(token,config.SECRET)
         
-        req.userId=decoded.id
+        req.Id=decoded.id
         const rol=decoded.rol[0];
-        req.rol=rol;
-        console.log(req.doctorId);
-        console.log(rol);
+        req.roll=rol;
+        
 
         if(rol=="doctor"){
-            const doctor=await Doctor.findById(req.userId);
+            const doctor=await Doctor.findById(req.Id);
             res.status(200).json(doctor)
         }
         else{
-            const paciente=await Paciente.findById(req.userId);
+            const paciente=await Paciente.findById(req.Id);
             res.status(200).json(paciente)
         }
         
