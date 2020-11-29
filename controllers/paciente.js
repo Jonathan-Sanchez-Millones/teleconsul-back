@@ -31,11 +31,12 @@ var controller = {
 
         const d_doctores= await DoctorPaciente.find({'paciente':id_paciente_a_buscar})
         .select({ "doctor": 1, "_id": 0})
-        .populate('doctor',{"email":0,"password":0,"_id":0,"roles":0,"domicilio":0})
+        .populate('doctor',{"email":0,"password":0,"roles":0,"domicilio":0})
         .lean().exec(function (err, result) {
 
             if(result){
                 var doctores = _.map(result, function(d) {
+                    d._id=d.doctor._id
                     d.nombres = d.doctor.nombres;
                     d.apellidos = d.doctor.apellidos;               
                     d.fecha_nacimiento = d.doctor.fecha_nacimiento;               
