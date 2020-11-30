@@ -138,7 +138,8 @@ var controller = {
 
         if(rol=="doctor"){
 
-            const mensajes = await Mensaje.find({doctor:userId,paciente:id}).populate('paciente','_id nombres apellidos foto')
+            const mensajes = await Mensaje.find({doctor:userId,paciente:id})
+            .select({ "doctor": 0, "paciente": 0})
             .sort('created_at')
             .paginate(page,itemsPerPage,(err,messages,total)=>{
                 if(!messages) return res.status(404).send({message:"No hay mensajes"});
@@ -153,7 +154,8 @@ var controller = {
 
         }else{
 
-            const mensajes = await Mensaje.find({paciente:userId,doctor:id}).populate('doctor','_id nombres apellidos foto')
+            const mensajes = await Mensaje.find({paciente:userId,doctor:id})
+            .select({ "doctor": 0, "paciente": 0})
             .sort('created_at')
             .paginate(page,itemsPerPage,(err,messages,total)=>{
                 if(!messages) return res.status(404).send({message:"No hay mensajes"});
