@@ -1,7 +1,7 @@
 'use strict'
 
 require('dotenv').config();
-
+var MensajeController = require('C:/Users/Jonathan/Desktop/2020/2020-I/Tesis-I/Backend/controllers/mensaje');
 var mongoose = require('mongoose');
 var app= require('./app');
 var server = require('http').Server(app);
@@ -31,13 +31,20 @@ mongoose.connect(process.env.MONGODB_URI,{
         })
         .catch(err=> console.log(err));
 
-        io.on('connection',(socket)=>{
-    
-            socket.on('send-message', (data)=>{
-                if(data){
-                    mensajes.push(data);
-                }
-                socket.emit('send-message',mensajes)
-            })      
-        })
+        io.on("connection", (socket) => {
+            socket.on("sendMessage", (message) => {
+             
+               // grabar en bd
+
+               MensajeController.saveMessage(message);
+
+              socket.emit("sendMessage", message);
+              socket.to(message.receiver).emit("sendMessage", message);
+            });
+            socket.on("connectUser", (user) => {
+              console.log("izi");
+              console.log(user._id);
+              socket.join(user._id);
+            });
+          });
 

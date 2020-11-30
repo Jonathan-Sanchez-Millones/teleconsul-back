@@ -11,9 +11,9 @@ const mongoosePaginate=require('mongoose-pagination');
 
 var controller = {
     
-    saveMessage:async function(req,res){
+    saveMessage:async function(message){
 
-        const{receiver,texto}=req.body;
+        const{receiver,texto}=message;
 
         var mensaje = new Mensaje();
         var emisor=req.rol;
@@ -26,7 +26,7 @@ var controller = {
             mensaje.texto=texto;
             mensaje.created_at=moment().unix();
             mensaje.save();
-            res.status(200).send({message:mensaje});
+            //res.status(200).send({message:mensaje});
         }
         else{
             mensaje.paciente = userId;
@@ -35,7 +35,7 @@ var controller = {
             mensaje.texto=texto;
             mensaje.created_at=moment().unix();
             mensaje.save();
-            res.status(200).send({message:mensaje});
+            //res.status(200).send({message:mensaje});
         }
 
     
