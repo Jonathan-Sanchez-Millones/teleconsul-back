@@ -32,6 +32,8 @@ var controller = {
         const token = jwt.sign({id:doctor._id,rol:doctor.roles},config.SECRET,{
             expiresIn:86400
         })
+        global.userIdglobal=doctor._id;
+        global.rolglobal=doctor.roles[0];
         res.json({token})
         }
     },
