@@ -16,8 +16,8 @@ var controller = {
         const{receiver,texto}=message;
 
         var mensaje = new Mensaje();
-        var emisor=req.rol;
-        var userId=req.userId;
+        var emisor=rolglobal;
+        var userId=userIdglobal;
     
         if(emisor=="doctor"){
             mensaje.doctor = userId; 

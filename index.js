@@ -35,8 +35,10 @@ mongoose.connect(process.env.MONGODB_URI,{
             socket.on("sendMessage", (message) => {
              
                // grabar en bd
-
-               MensajeController.saveMessage(message);
+                
+                    MensajeController.saveMessage(message);
+               
+               
 
               socket.emit("sendMessage", message);
               socket.to(message.receiver).emit("sendMessage", message);
