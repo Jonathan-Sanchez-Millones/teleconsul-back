@@ -35,6 +35,10 @@ mongoose
       console.log("Servidor corriendo en el puerto 3700");
       //var base = path.resolve('.',"uploads",uuidv4());
       //console.log("Gaaaa:"+base);
+      var ruta="uploads/"+uuidv4()+"."+"jpg";
+      console.log(ruta);
+      var ruta_image = path.resolve('.',ruta);
+      console.log(ruta_image);
     });
   })
   .catch((err) => console.log(err));
@@ -61,6 +65,7 @@ io.use(function (socket, next) {
   const {rol, id} = socket.decoded;
   let tipo="";
   let ruta="";
+  let ruta_image="";
   socket.on("sendMessage", (message) => {
     // grabar en bd
     if(!message.image){
@@ -70,11 +75,12 @@ io.use(function (socket, next) {
     }else{
       tipo="imagen";
 
-      const extension=message.image.substring("data:image/".length, message.image.indexOf(";base64"))
-      ruta = path.resolve('.',"uploads",(uuidv4()+"."+extension))
+      const extension=message.image.substring("data:image/".length, message.image.indexOf(";base64"));
+      ruta="uploads/"+uuidv4()+"."+extension;
+      ruta_image = path.resolve('.',ruta);
       const data = message.image.replace(/^data:image\/\w+;base64,/, "");
       fs.writeFile(
-      ruta
+      ruta_image
       ,
       data,
       { encoding: "base64" },
