@@ -9,7 +9,7 @@ const moment = require("moment");
 const mongoosePaginate = require("mongoose-pagination");
 
 var controller = {
-  saveMessage: function (message, rol, id, tipo) {
+  saveMessage: function (message, rol, id, tipo, ruta) {
     console.log(message);
     const { receiver, texto, image } = message;
 
@@ -45,7 +45,7 @@ var controller = {
       mensaje.doctor = userId;
       mensaje.paciente = receiver;
       mensaje.dir = 1;
-      mensaje.image = image;
+      mensaje.image = ruta;
       mensaje.created_at = moment().unix();
       mensaje.save();
 
@@ -54,7 +54,7 @@ var controller = {
       mensaje.paciente = userId;
       mensaje.doctor = receiver;
       mensaje.dir = 0;
-      mensaje.image = image;
+      mensaje.image = ruta;
       mensaje.created_at = moment().unix();
       mensaje.save();
       //res.status(200).send({message:mensaje});

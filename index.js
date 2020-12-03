@@ -59,7 +59,8 @@ io.use(function (socket, next) {
 }).on("connection", (socket) => {
   console.log("GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
   const {rol, id} = socket.decoded;
-  const tipo="";
+  let tipo="";
+  let ruta="";
   socket.on("sendMessage", (message) => {
     // grabar en bd
     if(!message.image){
@@ -70,11 +71,10 @@ io.use(function (socket, next) {
       tipo="imagen";
 
       const extension=message.image.substring("data:image/".length, message.image.indexOf(";base64"))
-      var base = path.resolve('.');
-      console.log(base);
+      ruta = path.resolve('.',"uploads",(uuidv4()+"."+extension))
       const data = message.image.replace(/^data:image\/\w+;base64,/, "");
       fs.writeFile(
-      path.resolve('.',"uploads",(uuidv4()+extension))
+      ruta
       ,
       data,
       { encoding: "base64" },
@@ -86,7 +86,7 @@ io.use(function (socket, next) {
 
     }
 
-    const newMessage = MensajeController.saveMessage(message, rol, id, tipo);
+    const newMessage = MensajeController.saveMessage(message, rol, id, tipo,ruta);
     
     console.log(newMessage);
     socket.emit("sendMessage", newMessage);
