@@ -15,6 +15,7 @@ var MensajeSchema = Schema({
      },
     dir: Number,
     texto: String,
+    image: String,
     viewed: String,
     created_at: String
 });

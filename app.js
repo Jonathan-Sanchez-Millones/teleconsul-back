@@ -6,6 +6,7 @@ var cookieParser=require('cookie-parser');
 var session=require('express-session');
 var cors=require('cors');
 var app = express();
+var path = require('path');
 
 //cargar archivos de rutas
 var doctor_routes = require('./routes/doctor');
@@ -36,6 +37,7 @@ app.use('/api',user_routes);
 app.use('/api',doctor_routes);
 app.use('/api',mensaje_routes);
 app.use('/api',paciente_routes);
+app.use('/uploads',express.static(path.resolve('uploads')));
 
 //exportar
 module.exports=app;

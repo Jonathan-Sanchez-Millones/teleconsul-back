@@ -1,9 +1,11 @@
 "use strict";
 
+const { v4: uuidv4 }=require('uuid');
+var path = require('path');
 const jwt = require("jsonwebtoken");
-
+const fs = require('fs');
 require("dotenv").config();
-var MensajeController = require("C:/Users/paulf/Documents/Projects/Backend-Teleconsulta/controllers/mensaje");
+var MensajeController = require("C:/Users/Jonathan/Desktop/2020/2020-I/Tesis-I/telemedicine-backend/controllers/mensaje");
 var mongoose = require("mongoose");
 var app = require("./app");
 var server = require("http").Server(app);
@@ -31,6 +33,8 @@ mongoose
     //Creacion del servidor
     server.listen(port, () => {
       console.log("Servidor corriendo en el puerto 3700");
+      //var base = path.resolve('.',"uploads");
+      //console.log("Gaaaa:"+base);
     });
   })
   .catch((err) => console.log(err));
@@ -55,13 +59,35 @@ io.use(function (socket, next) {
 }).on("connection", (socket) => {
   console.log("GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
   const {rol, id} = socket.decoded;
+  const tipo="";
   socket.on("sendMessage", (message) => {
     // grabar en bd
+    if(!message.image){
+      tipo="texto";
+      
 
-    const newMessage = MensajeController.saveMessage(message, rol, id);
-    console.log("GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    console.log("GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    console.log("GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    }else{
+      tipo="imagen";
+
+      const extension=message.image.substring("data:image/".length, message.image.indexOf(";base64"))
+      var base = path.resolve('.');
+      console.log(base);
+      const data = message.image.replace(/^data:image\/\w+;base64,/, "");
+      fs.writeFile(
+      path.resolve('.',"uploads",(uuidv4()+extension))
+      ,
+      data,
+      { encoding: "base64" },
+      function (err) {
+        if (err) throw err;
+        console.log("Saved!");
+      }
+    );
+
+    }
+
+    const newMessage = MensajeController.saveMessage(message, rol, id, tipo);
+    
     console.log(newMessage);
     socket.emit("sendMessage", newMessage);
     socket.to(message.receiver).emit("sendMessage", newMessage);
@@ -71,4 +97,5 @@ io.use(function (socket, next) {
     console.log(user._id);
     socket.join(user._id);
   });
+  
 });

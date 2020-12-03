@@ -9,14 +9,69 @@ const moment = require("moment");
 const mongoosePaginate = require("mongoose-pagination");
 
 var controller = {
-  saveMessage: function (message, rol, id) {
-    console.log("TETTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
+  saveMessage: function (message, rol, id, tipo) {
     console.log(message);
-    const { receiver, texto } = message;
+    const { receiver, texto, image } = message;
 
     var mensaje = new Mensaje();
     var emisor = rol;
     var userId = id;
+    console.log(emisor, userId);
+    if(tipo=="texto"){
+
+    if (emisor == "doctor") {
+      mensaje.doctor = userId;
+      mensaje.paciente = receiver;
+      mensaje.dir = 1;
+      mensaje.texto = texto;
+      mensaje.created_at = moment().unix();
+      mensaje.save();
+
+      // res.status(200).send({message:mensaje});
+    } else {
+      mensaje.paciente = userId;
+      mensaje.doctor = receiver;
+      mensaje.dir = 0;
+      mensaje.texto = texto;
+      mensaje.created_at = moment().unix();
+      mensaje.save();
+      //res.status(200).send({message:mensaje});
+    }
+    
+  }
+  else{
+
+    if (emisor == "doctor") {
+      mensaje.doctor = userId;
+      mensaje.paciente = receiver;
+      mensaje.dir = 1;
+      mensaje.image = image;
+      mensaje.created_at = moment().unix();
+      mensaje.save();
+
+      // res.status(200).send({message:mensaje});
+    } else {
+      mensaje.paciente = userId;
+      mensaje.doctor = receiver;
+      mensaje.dir = 0;
+      mensaje.image = image;
+      mensaje.created_at = moment().unix();
+      mensaje.save();
+      //res.status(200).send({message:mensaje});
+    }
+
+  }
+  return mensaje;
+
+
+},
+
+  saveImage: function (req,res) {
+    /*const { receiver, texto } = req.body;
+
+    var mensaje = new Mensaje();
+    var emisor = req.rol;
+    var userId = req.userId;
     console.log(emisor, userId);
 
     if (emisor == "doctor") {
@@ -37,7 +92,10 @@ var controller = {
       mensaje.save();
       //res.status(200).send({message:mensaje});
     }
-    return mensaje;
+    res.status(200).send({message:mensaje});
+    */
+   res.status(200).send({message:"Imagen subida!"});
+
   },
 
   getMensajesRecibidos: async function (req, res) {
