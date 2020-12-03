@@ -33,7 +33,7 @@ mongoose
     //Creacion del servidor
     server.listen(port, () => {
       console.log("Servidor corriendo en el puerto 3700");
-      //var base = path.resolve('.',"uploads");
+      //var base = path.resolve('.',"uploads",uuidv4());
       //console.log("Gaaaa:"+base);
     });
   })
