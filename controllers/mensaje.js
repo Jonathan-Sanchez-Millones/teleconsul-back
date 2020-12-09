@@ -10,7 +10,6 @@ const mongoosePaginate = require("mongoose-pagination");
 
 var controller = {
   saveMessage: function (message, rol, id, tipo, ruta) {
-    console.log(message);
     const { receiver, texto, image } = message;
 
     var mensaje = new Mensaje();

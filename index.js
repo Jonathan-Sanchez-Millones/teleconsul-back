@@ -1,11 +1,12 @@
 "use strict";
 
+const dotenv=require('dotenv').config();
 const { v4: uuidv4 }=require('uuid');
 var path = require('path');
 const jwt = require("jsonwebtoken");
 const fs = require('fs');
 require("dotenv").config();
-var MensajeController = require("C:/Users/Jonathan/Desktop/2020/2020-I/Tesis-I/telemedicine-backend/controllers/mensaje");
+var MensajeController = require(path.resolve('.','controllers','mensaje'));
 var mongoose = require("mongoose");
 var app = require("./app");
 var server = require("http").Server(app);
@@ -21,7 +22,7 @@ const mensajes = [];
 mongoose.Promise = global.Promise;
 mongoose
   .connect(
-    "mongodb+srv://Cacarlsen:blackwin@cluster0.ocl5l.mongodb.net/Hospital",
+    process.env.MONGODB_URI,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -33,12 +34,7 @@ mongoose
     //Creacion del servidor
     server.listen(port, () => {
       console.log("Servidor corriendo en el puerto 3700");
-      //var base = path.resolve('.',"uploads",uuidv4());
-      //console.log("Gaaaa:"+base);
-      var ruta="uploads/"+uuidv4()+"."+"jpg";
-      console.log(ruta);
-      var ruta_image = path.resolve('.',ruta);
-      console.log(ruta_image);
+      
     });
   })
   .catch((err) => console.log(err));
@@ -94,7 +90,6 @@ io.use(function (socket, next) {
 
     const newMessage = MensajeController.saveMessage(message, rol, id, tipo,ruta);
     
-    console.log(newMessage);
     socket.emit("sendMessage", newMessage);
     socket.to(message.receiver).emit("sendMessage", newMessage);
   });
@@ -102,6 +97,13 @@ io.use(function (socket, next) {
     console.log("izi");
     console.log(user._id);
     socket.join(user._id);
+  });
+
+  socket.on("rooms-updated", (data) => {
+    console.log(data);
+    socket.emit("rooms-updated",data);
+    socket.emit.broadcast("rooms-updated",data);
+
   });
   
 });

@@ -12,6 +12,7 @@ var path = require('path');
 var doctor_routes = require('./routes/doctor');
 var user_routes = require('./routes/user');
 var mensaje_routes = require('./routes/mensaje');
+var videocall_routes = require('./routes/videocall');
 var paciente_routes = require('./routes/paciente');
 
 //middlewares
@@ -36,6 +37,7 @@ app.use(cors());
 app.use('/api',user_routes);
 app.use('/api',doctor_routes);
 app.use('/api',mensaje_routes);
+app.use('/api',videocall_routes);
 app.use('/api',paciente_routes);
 app.use('/uploads',express.static(path.resolve('uploads')));
 
