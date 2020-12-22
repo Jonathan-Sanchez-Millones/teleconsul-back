@@ -44,12 +44,13 @@ var controller = {
 
 
 },
-    getMensajes: async function (req, res) {
-    var id = req.params.id;
-    var userId = req.userId;
-    var rol = req.rol;
-    var page = 1;
-
+    getEncuestas: async function (req, res) {
+    var pacienteId = req.params.id;
+    var encuestas = await Encuesta.find({ paciente: pacienteId })
+        .select({ paciente: 0 })
+        .sort("created_at");
+    
+    return res.status(200).json(encuestas);
   },
 };
 
