@@ -10,6 +10,7 @@ var EncuestaSchema = Schema({
         ref: 'Paciente'
      },
     temperatura: Number,
+    glucosa: Number,
     frecuencia_arterial: Number,
     frecuencia_respiratoria: Number,
     presion_arterial_diastolica: Number,
@@ -22,10 +23,12 @@ var EncuestaSchema = Schema({
     coloracion_herida: String,
     color_coloracion_herida: String,
     molestia_miccion: String,
-    tipo_molestia_miccion: String,
+    tipo_molestia_miccion: [String],
     veces_defeca_dia: Number,
     textura_heces: String,
     otros: String,
+    estado: String,
+    recomendacion: String,
     created_at: String,
 
 });
