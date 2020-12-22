@@ -10,8 +10,8 @@ const mongoosePaginate = require("mongoose-pagination");
 
 var controller = {
   saveMessage: function (message, rol, id, tipo, ruta) {
+    
     const { receiver, texto, image } = message;
-
     var mensaje = new Mensaje();
     var emisor = rol;
     var userId = id;
@@ -25,8 +25,6 @@ var controller = {
       mensaje.texto = texto;
       mensaje.created_at = moment().unix();
       mensaje.save();
-
-      // res.status(200).send({message:mensaje});
     } else {
       mensaje.paciente = userId;
       mensaje.doctor = receiver;
@@ -34,12 +32,9 @@ var controller = {
       mensaje.texto = texto;
       mensaje.created_at = moment().unix();
       mensaje.save();
-      //res.status(200).send({message:mensaje});
-    }
-    
+    }  
   }
   else{
-
     if (emisor == "doctor") {
       mensaje.doctor = userId;
       mensaje.paciente = receiver;
@@ -47,8 +42,6 @@ var controller = {
       mensaje.image = ruta;
       mensaje.created_at = moment().unix();
       mensaje.save();
-
-      // res.status(200).send({message:mensaje});
     } else {
       mensaje.paciente = userId;
       mensaje.doctor = receiver;
@@ -56,7 +49,6 @@ var controller = {
       mensaje.image = ruta;
       mensaje.created_at = moment().unix();
       mensaje.save();
-      //res.status(200).send({message:mensaje});
     }
 
   }
@@ -195,29 +187,10 @@ var controller = {
       mensajes = await Mensaje.find({ doctor: userId, paciente: id })
         .select({ doctor: 0, paciente: 0 })
         .sort("created_at");
-      // .paginate(page, itemsPerPage, (err, messages, total) => {
-      //   if (!messages)
-      //     return res.status(404).send({ message: "No hay mensajes" });
-
-      //   return res.status(200).send({
-      //     total: total,
-      //     pages: Math.ceil(total / itemsPerPage),
-      //     messages,
-      //   });
     } else {
       mensajes = await Mensaje.find({ paciente: userId, doctor: id })
         .select({ doctor: 0, paciente: 0 })
         .sort("created_at");
-      // .paginate(page, itemsPerPage, (err, messages, total) => {
-      //   if (!messages)
-      //     return res.status(404).send({ message: "No hay mensajes" });
-
-      //   return res.status(200).send({
-      //     total: total,
-      //     pages: Math.ceil(total / itemsPerPage),
-      //     messages,
-      //   });
-      // });
     }
     return res.status(200).send({
       total: "",

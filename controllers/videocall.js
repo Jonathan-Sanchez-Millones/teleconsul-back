@@ -18,10 +18,8 @@ var controller = {
     );
 
     const grant = new VideoGrant();
-    // Grant token access to the Video API features
     token.addGrant(grant);
 
-    // Serialize the token to a JWT string and include it in a JSON response
     res.status(200).send({ token: token.toJwt() });
   },
 

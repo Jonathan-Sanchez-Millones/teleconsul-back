@@ -67,8 +67,6 @@ const verifyToken = async(req,res,next) =>{
         req.userId=decoded.id;
 
         req.rol=decoded.rol[0];
-        console.log("attention:"+req.userId);
-        console.log("attention-rol:"+req.rol);
 
         const doctor=await Doctor.findById(req.userId,{password:0});
 

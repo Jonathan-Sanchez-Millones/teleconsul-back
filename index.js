@@ -40,9 +40,7 @@ mongoose
   .catch((err) => console.log(err));
 
 io.use(function (socket, next) {
-  console.log("lasmdlsadmlasmdslakmdskald");
   if (socket.handshake.query && socket.handshake.query.jwt) {
-    console.log("entrooooo");
     jwt.verify(
       socket.handshake.query.jwt,
       'hospital-api',
@@ -53,17 +51,15 @@ io.use(function (socket, next) {
       }
     );
   } else {
-    console.log("no entrooo");
     next(new Error("Authentication error"));
   }
 }).on("connection", (socket) => {
-  console.log("GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
   const {rol, id} = socket.decoded;
   let tipo="";
   let ruta="";
   let ruta_image="";
   socket.on("sendMessage", (message) => {
-    // grabar en bd
+    // grabar en la bd
     if(!message.image){
       tipo="texto";
       
@@ -85,11 +81,8 @@ io.use(function (socket, next) {
         console.log("Saved!");
       }
     );
-
     }
-
     const newMessage = MensajeController.saveMessage(message, rol, id, tipo,ruta);
-    
     socket.emit("sendMessage", newMessage);
     socket.to(message.receiver).emit("sendMessage", newMessage);
   });

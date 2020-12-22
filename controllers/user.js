@@ -18,22 +18,15 @@ var controller = {
 
             if(!paciente) return res.status(401).send("Usuario no existente");
 
-            //return res.status(200).send("Bienvenido paciente");
-
             const token = jwt.sign({id:paciente._id,rol:paciente.roles},config.SECRET,{
                 expiresIn:86400
             })
-            global.userIdglobal=paciente._id;
-            global.rolglobal=paciente.roles[0];
             res.json({token})            
         }
         else{
-        //return res.status(200).send("Bienvenido doctor");
         const token = jwt.sign({id:doctor._id,rol:doctor.roles},config.SECRET,{
             expiresIn:86400
         })
-        global.userIdglobal=doctor._id;
-        global.rolglobal=doctor.roles[0];
         res.json({token})
         }
     },
