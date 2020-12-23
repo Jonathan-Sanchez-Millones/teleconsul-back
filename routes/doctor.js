@@ -7,6 +7,6 @@ const {verifyTokenDoctor,verifyTokenPaciente,verifyToken}= require('../middlewar
 var router = express.Router();
 
 //router.get('/home',verifyToken,DoctorController.home);
-router.get('/pacientes/:doctorId',DoctorController.getPacientesByDoctor);
+router.get('/pacientes/:doctorId',verifyTokenDoctor,DoctorController.getPacientesByDoctor);
 
 module.exports = router;
