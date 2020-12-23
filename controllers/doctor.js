@@ -4,7 +4,8 @@ const DoctorPaciente=require('../models/doctor_paciente');
 var _ = require('underscore');
 const jwt=require('jsonwebtoken');
 const config=require('../config');
-
+const Encuesta = require("../models/encuesta");
+const moment = require("moment");
 
 var controller = {
     home: function(req,res){
@@ -53,6 +54,22 @@ var controller = {
                     p.paciente = undefined;
                     return p;
                 });
+
+                for(let i in pacientes){
+
+                    var pacienteId = pacientes[i]._id;
+
+                    var ultima_encuesta = await Encuesta.find({ paciente: pacienteId })
+                    .select({ paciente: 0,temperatura:0,glucosa:0,frecuencia_arterial:0,
+                    frecuencia_respiratoria:0,presion_arterial_diastolica:0,presion_arterial_sistolica:0,
+                    dolor:0,sangrado_vagina:0,color_sangrado_vagina:0,sangrado_herida:0,color_sangrado_herida:0,
+                    coloracion_herida:0,color_coloracion_herida:0,molestia_miccion:0,tipo_molestia_miccion:0,
+                    veces_defeca_dia:0,textura_heces:0,otros:0 })
+                    .sort({"created_at":-1}).limit(1);
+                    pacientes[i].estado=ultima_encuesta.estado;
+                    pacientes[i].recomendacion=ultima_encuesta.recomendacion;
+
+                }
                 res.status(200).json(pacientes);
             }
         });

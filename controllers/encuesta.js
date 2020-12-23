@@ -9,10 +9,11 @@ const mongoosePaginate = require("mongoose-pagination");
 var controller = {
   saveEncuesta: function (req,res) {
     
-    const { temperatura, glucosa, frec_art, frec_resp, pres_art_dias, pres_art_sist,
-    dolor, sangrado_v, color_sangrado_v, sangrado_h, color_sangrado_h,
-    coloracion_h,color_coloracion_h,molestia_miccion,tipo_molestia_miccion,
-    veces_defeca_dia,textura_heces,otros} = req.body;
+    const { temperatura, glucosa, frecuencia_arterial:frec_art, frecuencia_respiratoria:frec_resp,
+       presion_arterial_diastolica:pres_art_dias, presion_arterial_sistolica:pres_art_sist,
+    dolor, sangrado_vagina:sangrado_v, color_sangrado_vagina:color_sangrado_v, sangrado_herida:sangrado_h, 
+    color_sangrado_herida:color_sangrado_h,coloracion_herida:coloracion_h,color_coloracion_herida:color_coloracion_h,
+    molestia_miccion,tipo_molestia_miccion,veces_defeca_dia,textura_heces,otros} = req.body;
     
     const pacienteId = req.pacienteId;
     var encuesta = new Encuesta();
@@ -22,11 +23,11 @@ var controller = {
     encuesta.glucosa = glucosa;
     encuesta.frecuencia_arterial = frec_art;
     encuesta.frecuencia_respiratoria = frec_resp; 
-    encuesta.presion_arterial_diastolica = pres_art_dias
-    encuesta.presion_arterial_sistolica = pres_art_sist
+    encuesta.presion_arterial_diastolica = pres_art_dias;
+    encuesta.presion_arterial_sistolica = pres_art_sist;
     encuesta.dolor = dolor;
-    encuesta.sangrado_vagina = sangrado_v
-    encuesta.color_sangrado_vagina = color_sangrado_v
+    encuesta.sangrado_vagina = sangrado_v;
+    encuesta.color_sangrado_vagina = color_sangrado_v;
     encuesta.sangrado_herida = sangrado_h;
     encuesta.color_sangrado_herida = color_sangrado_h;
     encuesta.coloracion_herida = coloracion_h;
