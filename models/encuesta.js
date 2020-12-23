@@ -33,4 +33,4 @@ var EncuestaSchema = Schema({
 
 });
 
-module.exports = mongoose.model('Mensaje', EncuestaSchema);
+module.exports = mongoose.model('Encuesta', EncuestaSchema);
