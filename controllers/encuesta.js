@@ -281,8 +281,29 @@ var controller = {
     p_th=3;
     }
     
-    var puntaje_total = p_temp+p_glucosa+p_fa+p_fr+p_pad+p_pas+p_dolor+p_csv+p_csh+p_cch+p_tmm+p_vdd+p_th
+    var p_total = p_temp+p_glucosa+p_fa+p_fr+p_pad+p_pas+p_dolor+p_csv+p_csh+p_cch+p_tmm+p_vdd+p_th
+    var estado;
+    var recomendacion;
+    //sacamos el estado del paciente según la encuesta
 
+    if(0<=p_total<=12){
+      estado='mejorado';
+      recomendacion='seguir indicaciones medicas';
+    }
+    else if(13<=p_total<=25){
+      estado='buen estado';
+      recomendacions='seguir indicaciones medicas / llamada telefonica';
+    }
+    else if(26<=p_total<=38){
+      estado='estacionario';
+      recomendacion='videollamada para ampliar la anamnesis';
+    }
+    else{
+      estado='mal estado'
+      recomendacion='acudir a emergencias o videollamadas de emergencia';
+    }
+    encuesta.estado = estado;
+    encuesta.recomendacion=recomendacion;
     encuesta.created_at = moment().unix();
     encuesta.save()
     
