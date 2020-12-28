@@ -6,6 +6,8 @@ const config = require("../config");
 const moment = require("moment");
 const mongoosePaginate = require("mongoose-pagination");
 
+
+
 var controller = {
   saveEncuesta: function (req,res) {
     
@@ -38,32 +40,34 @@ var controller = {
     encuesta.textura_heces = textura_heces;
     encuesta.otros = otros;
 
-    var p_temp;
-    var p_glucosa;
-    var p_fa;
-    var p_fr;
-    var p_pad;
-    var p_pas;
-    var p_dolor;
-    var p_csv;
-    var p_csh;
-    var p_cch;
-    var p_tmm;
-    var p_vdd;
-    var p_th;
+    var p_temp=0;
+    var p_glucosa=0;
+    var p_fa=0;
+    var p_fr=0;
+    var p_pad=0;
+    var p_pas=0;
+    var p_dolor=0;
+    var p_csv=0;
+    var p_csh=0;
+    var p_cch=0;
+    var p_tmm=0;
+    var p_vdd=0;
+    var p_th=0;
+
+    function analisis(){
     //analisis de datos
     //temperatura
 
-    if(36<=temperatura<=37.2){
+    if(36<=temperatura && temperatura<=37.2){
       p_temp=0;
     }
-    else if(37.3<=temperatura<=37.9){
+    else if(37.3<=temperatura && temperatura<=37.9){
       p_temp=1;
     }
-    else if(38<=temperatura<=38.7 || temperatura<=35.9){
+    else if(38<=temperatura && temperatura<=38.7 || temperatura<=35.9){
       p_temp=2;
     }
-    else if(38.8<=temperatura<=39.5){
+    else if(38.8<=temperatura && temperatura<=39.5){
       p_temp=3;
     }
     else{
@@ -72,16 +76,16 @@ var controller = {
 
     //glucosa
 
-    if(70<=glucosa<=108){
+    if(70<=glucosa && glucosa<=108){
       p_glucosa=0;
     }
-    else if(109<=glucosa<=125){
+    else if(109<=glucosa && glucosa<=125){
       p_glucosa=1;
     }
-    else if(126<=glucosa<=150){
+    else if(126<=glucosa && glucosa<=150){
       p_glucosa=2;
     }
-    else if(151<=glucosa<=200 || glucosa>200){
+    else if(151<=glucosa && glucosa<=200 || glucosa<70){
       p_glucosa=3;
     }
     else{
@@ -91,16 +95,16 @@ var controller = {
 
     //frecuencia arterial
 
-    if(51<=frec_art<=90){
+    if(51<=frec_art && frec_art<=90){
       p_fa=0;
     }
-    else if(91<=frec_art<=100){
+    else if(91<=frec_art && frec_art<=100){
       p_fa=1;
     }
-    else if(101<=frec_art<=110 || frec_art<=50){
+    else if(101<=frec_art && frec_art<=110 || frec_art<=50){
       p_fa=2;
     }
-    else if(111<=frec_art<=120){
+    else if(111<=frec_art && frec_art<=120){
       p_fa=3;
     }
     else{
@@ -109,16 +113,16 @@ var controller = {
 
     //frecuencia respiratoria
 
-    if(14<=frec_resp<=18){
+    if(14<=frec_resp && frec_resp<=18){
       p_fr=0;
     }
-    else if(19<=frec_resp<=20){
+    else if(19<=frec_resp && frec_resp<=20){
       p_fr=1;
     }
-    else if(21<=frec_resp<=22 || frec_resp<=13){
+    else if(21<=frec_resp && frec_resp<=22 || frec_resp<=13){
       p_fr=2;
     }
-    else if(23<=frec_resp<=24){
+    else if(23<=frec_resp && frec_resp<=24){
       p_fr=3;
     }
     else{
@@ -127,19 +131,19 @@ var controller = {
 
     //presion arterial diastolica
 
-    if(60<=pres_art_dias<=80){
+    if(60<=pres_art_dias && pres_art_dias<=80){
       p_pad=0;
     }
-    else if(81<=pres_art_dias<=90){
+    else if(81<=pres_art_dias && pres_art_dias<=90){
       p_pad=1;
     }
-    else if(91<=pres_art_dias<=105 || pres_art_dias<=59){
+    else if(91<=pres_art_dias && pres_art_dias<=105 || pres_art_dias<=59){
       p_pad=2;
     }
-    else if(106<=pres_art_dias<=115){
+    else if(106<=pres_art_dias && pres_art_dias<=115){
       p_pad=3;
     }
-    else if(116<=pres_art_dias<=125){
+    else if(116<=pres_art_dias && pres_art_dias<=125){
       p_pad=4;
     }
     else{
@@ -148,19 +152,19 @@ var controller = {
 
     //presion arterial sistolica
 
-    if(80<=pres_art_sist<=120){
+    if(80<=pres_art_sist && pres_art_sist<=120){
       p_pas=0;
     }
-    else if(121<=pres_art_sist<=140){
+    else if(121<=pres_art_sist && pres_art_sist<=140){
       p_pas=1;
     }
-    else if(141<=pres_art_sist<=160 || pres_art_sist<=79){
+    else if(141<=pres_art_sist && pres_art_sist<=160 || pres_art_sist<=79){
       p_pas=2;
     }
-    else if(161<=pres_art_sist<=180){
+    else if(161<=pres_art_sist && pres_art_sist<=180){
       p_pas=3;
     }
-    else if(181<=pres_art_sist<=200){
+    else if(181<=pres_art_sist && pres_art_sist<=200){
       p_pas=4;
     }
     else{
@@ -168,16 +172,16 @@ var controller = {
     }
 
     //dolor
-    if(dolor=0){
+    if(dolor==0){
       p_dolor=0;
     }
-    else if(1<=dolor<=2){
+    else if(1<=dolor && dolor<=2){
       p_dolor=1;
     }
-    else if(3<=dolor<=4){
+    else if(3<=dolor && dolor<=4){
       p_dolor=2;
     }
-    else if(5<=dolor<=7){
+    else if(5<=dolor && dolor<=7){
       p_dolor=3;
     }
     else{
@@ -196,7 +200,7 @@ var controller = {
     case 'rojo oscuro':
     p_csv=3;
     break;
-    case 'verde':
+    case 'verde mal oliente':
     p_csv=4;
     break;
     default:
@@ -208,7 +212,7 @@ var controller = {
   if(sangrado_h=='Si'){
 
     switch (color_sangrado_h.toLowerCase()) {
-    case 'aceitoso':
+    case 'aceitoso (graso)':
     p_csh=1;
     break;
     case 'rojo claro':
@@ -217,10 +221,10 @@ var controller = {
     case 'rojo oscuro':
     p_csh=3;
     break;
-    case 'purulento':
+    case 'purulento (pus)':
     p_csh=4;
     break;
-    case 'verde':
+    case 'verde mal oliente':
     p_csh=5;
     break;
     default:
@@ -232,10 +236,10 @@ var controller = {
   if(coloracion_h=='Si'){
 
     switch (color_coloracion_h.toLowerCase()) {
-    case 'morado':
+    case 'morado (ligero dolor a la palpacion)':
     p_cch=1;
     break;
-    case 'rojo':
+    case 'rojo (doloroso a la palapacion':
     p_cch=2;
     break;
     default:
@@ -250,16 +254,16 @@ var controller = {
     }
 
   //veces defeca dia
-  if(1<=veces_defeca_dia<=2){
+  if(1<=veces_defeca_dia && veces_defeca_dia<=2){
     p_vdd=0;
   }
-  else if(3<=dolor<=4){
+  else if(3<=veces_defeca_dia && veces_defeca_dia<=4){
     p_vdd=1;
   }
-  else if(5<=dolor<=6){
+  else if(5<=veces_defeca_dia && veces_defeca_dia<=6){
     p_vdd=2;
   }
-  else if(7<=dolor<=8){
+  else if(7<=veces_defeca_dia && veces_defeca_dia<=8){
     p_vdd=3;
   }
   else{
@@ -269,7 +273,7 @@ var controller = {
   //textura de heces
   
     switch (textura_heces.toLowerCase()) {
-    case 'cilindrica blanda':
+    case 'cilindrica (blanda no dolorosa)':
     p_th=0;
     break;
     case 'pastosas':
@@ -281,21 +285,40 @@ var controller = {
     default:
     p_th=3;
     }
+  }
+  analisis();
+
+    console.log("p_temp: "+p_temp);
+    console.log("p_gluc: "+p_glucosa);
+    console.log("p_fa: "+p_fa);
+    console.log("p_fr: "+p_fr);
+    console.log("p_pad: "+p_pad);
+    console.log("p_pas: "+p_pas);
+    console.log("p_dolor: "+p_dolor);
+    console.log("p_csv: "+p_csv);
+    console.log("p_csh: "+p_csh);
+    console.log("p_cch: "+p_cch);
+    console.log("p_tmm: "+p_tmm);
+    console.log("p_vdd: "+p_vdd);
+    console.log("p_th: "+p_th);
+
     
+
     var p_total = p_temp+p_glucosa+p_fa+p_fr+p_pad+p_pas+p_dolor+p_csv+p_csh+p_cch+p_tmm+p_vdd+p_th
+    console.log("p_total: "+p_total);
     var estado;
     var recomendacion;
     //sacamos el estado del paciente según la encuesta
 
-    if(0<=p_total<=12){
+    if(0<=p_total && p_total<=12){
       estado='mejorado';
       recomendacion='seguir indicaciones medicas';
     }
-    else if(13<=p_total<=25){
+    else if(13<=p_total && p_total<=25){
       estado='buen estado';
-      recomendacions='seguir indicaciones medicas / llamada telefonica';
+      recomendacion='seguir indicaciones medicas / llamada telefonica';
     }
-    else if(26<=p_total<=38){
+    else if(26<=p_total && p_total<=38){
       estado='estacionario';
       recomendacion='videollamada para ampliar la anamnesis';
     }
@@ -306,6 +329,7 @@ var controller = {
     encuesta.estado = estado;
     encuesta.recomendacion=recomendacion;
     encuesta.created_at = moment().unix();
+    console.log(encuesta);
     encuesta.save()
     
     res.status(200).json(encuesta);
@@ -317,7 +341,7 @@ var controller = {
     var pacienteId = req.params.id;
     var encuestas = await Encuesta.find({ paciente: pacienteId })
         .select({ paciente: 0 })
-        .sort("created_at");
+        .sort({"created_at":-1});
     
     return res.status(200).json(encuestas);
   },
