@@ -18,6 +18,8 @@ var EpicrisiSchema = Schema({
     frecuencia_respiratoria: Number,
     diagnostico_ingreso: String,
     diagnostico_egreso: String,
+    medicacion: [String],
+    medidas_terapeuticas: [String]
 
 });
 

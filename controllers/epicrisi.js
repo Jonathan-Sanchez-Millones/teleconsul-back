@@ -34,7 +34,6 @@ var controller = {
               p.dias_post_operado=Math.trunc(dias_post_operado);
               p.dias_alta=Math.trunc(dias_alta);
               p.edad=Math.trunc(años_edad);
-
               return p;
           });
           res.status(200).json(paciente);
