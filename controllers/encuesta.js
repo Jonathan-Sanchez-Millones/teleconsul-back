@@ -239,7 +239,7 @@ var controller = {
     case 'morado (ligero dolor a la palpacion)':
     p_cch=1;
     break;
-    case 'rojo (doloroso a la palapacion':
+    case 'rojo (doloroso a la palpacion)':
     p_cch=2;
     break;
     default:
@@ -250,7 +250,7 @@ var controller = {
     //tipo molestia miccion
   if(molestia_miccion=='Si'){
 
-    p_tmm=tipo_molestia_miccion.length;
+    p_tmm=(tipo_molestia_miccion.length)*3;
     }
 
   //veces defeca dia
@@ -263,7 +263,7 @@ var controller = {
   else if(5<=veces_defeca_dia && veces_defeca_dia<=6){
     p_vdd=2;
   }
-  else if(7<=veces_defeca_dia && veces_defeca_dia<=8){
+  else if(7<=veces_defeca_dia && veces_defeca_dia<=8 || veces_defeca_dia<1){
     p_vdd=3;
   }
   else{
@@ -273,7 +273,7 @@ var controller = {
   //textura de heces
   
     switch (textura_heces.toLowerCase()) {
-    case 'cilindrica (blanda no dolorosa)':
+    case 'normal (cilindrica blanda no dolorosa)':
     p_th=0;
     break;
     case 'pastosas':
@@ -310,21 +310,21 @@ var controller = {
     var recomendacion;
     //sacamos el estado del paciente según la encuesta
 
-    if(0<=p_total && p_total<=12){
+    if(0<=p_total && p_total<=15){
       estado='mejorado';
-      recomendacion='seguir indicaciones medicas';
+      recomendacion='seguir indicaciones medicas / verificar preguntas criticas';
     }
-    else if(13<=p_total && p_total<=25){
-      estado='buen estado';
+    else if(16<=p_total && p_total<=25){
+      estado='regular estado';
       recomendacion='seguir indicaciones medicas / llamada telefonica';
     }
-    else if(26<=p_total && p_total<=38){
-      estado='estacionario';
+    else if(26<=p_total && p_total<=40){
+      estado='regular a estacionario';
       recomendacion='videollamada para ampliar la anamnesis';
     }
     else{
       estado='mal estado'
-      recomendacion='acudir a emergencias o videollamadas de emergencia';
+      recomendacion='acudir a emergencias o videollamada de emergencia';
     }
     encuesta.estado = estado;
     encuesta.recomendacion=recomendacion;
