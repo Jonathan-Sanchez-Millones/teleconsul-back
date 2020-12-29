@@ -144,7 +144,7 @@ var controller = {
     }
     else if(21<=frec_resp && frec_resp<=22 || frec_resp<=13){
       p_fr=2;
-      naranja+=1;
+      rojo+=1;
     }
     else if(23<=frec_resp && frec_resp<=24){
       p_fr=3;
