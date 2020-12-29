@@ -3,6 +3,7 @@
 const Encuesta = require("../models/encuesta");
 const jwt = require("jsonwebtoken");
 const config = require("../config");
+var _ = require('underscore');
 const moment = require("moment");
 const mongoosePaginate = require("mongoose-pagination");
 
@@ -420,9 +421,17 @@ var controller = {
     var pacienteId = req.params.id;
     var encuestas = await Encuesta.find({ paciente: pacienteId })
         .select({ paciente: 0 })
-        .sort({"created_at":-1});
-    
-    return res.status(200).json(encuestas);
+        .sort({"created_at":-1})
+        .lean().exec(function (err, result) {
+
+          if(result){
+              var encuestas = _.map(result, function(e) {
+                  e.created_at= moment.unix(e.created_at).format("DD/MM/YYYY");
+                  return e;
+              });
+              res.status(200).json(encuestas);
+          }
+      });
   },
 
   pruebita: function (req, res) {
