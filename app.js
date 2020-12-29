@@ -16,6 +16,7 @@ var videocall_routes = require('./routes/videocall');
 var paciente_routes = require('./routes/paciente');
 var encuesta_routes = require('./routes/encuesta');
 var epicrisi_routes = require('./routes/epicrisi');
+var medication_routes = require('./routes/medication');
 
 //middlewares
 
@@ -41,6 +42,7 @@ app.use('/api',doctor_routes);
 app.use('/api',mensaje_routes);
 app.use('/api',encuesta_routes);
 app.use('/api',epicrisi_routes);
+app.use('/api',medication_routes);
 app.use('/api',videocall_routes);
 app.use('/api',paciente_routes);
 app.use('/uploads',express.static(path.resolve('uploads')));
