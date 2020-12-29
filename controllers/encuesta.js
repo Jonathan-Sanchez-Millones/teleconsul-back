@@ -409,10 +409,14 @@ var controller = {
     encuesta.estado = estado;
     encuesta.recomendacion=recomendacion;
     encuesta.created_at = moment().unix();
+    encuesta.verde=verde;
+    encuesta.amarillo=amarillo;
+    encuesta.naranja=naranja;
+    encuesta.rojo=rojo;
     console.log(encuesta);
-    encuesta.save()
+    encuesta.save();
     
-    res.status(200).json({verde,amarillo,naranja,rojo});
+    res.status(200).json(encuesta);
     
 
 

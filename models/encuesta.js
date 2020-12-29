@@ -30,6 +30,10 @@ var EncuestaSchema = Schema({
     estado: String,
     recomendacion: String,
     created_at: String,
+    verde: Number,
+    amarillo: Number,
+    naranja: Number,
+    rojo: Number
 
 });
 
