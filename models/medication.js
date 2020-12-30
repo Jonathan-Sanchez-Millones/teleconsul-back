@@ -9,8 +9,8 @@ var MedicationSchema = Schema({
         type: Schema.ObjectId,
         ref: 'Encuesta'
     },
-    medicamentos: [String],
-    indicaciones: [String]
+    medicamentos: String,
+    indicaciones: String
 
 });
 
