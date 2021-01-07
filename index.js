@@ -1,5 +1,5 @@
 "use strict";
-
+var express = require('express');
 const dotenv=require('dotenv').config();
 const { v4: uuidv4 }=require('uuid');
 var path = require('path');
@@ -9,6 +9,7 @@ require("dotenv").config();
 var MensajeController = require(path.resolve('.','controllers','mensaje'));
 var mongoose = require("mongoose");
 var app = require("./app");
+var exp= express();
 var server = require("http").Server(app);
 var SocketIO = require("socket.io");
 var io = SocketIO(server, {
@@ -16,7 +17,7 @@ var io = SocketIO(server, {
     origins: "*",
   },
 });
-var port = 3700;
+exp.set( 'port',process.env.PORT || 3700);
 const mensajes = [];
 
 mongoose.Promise = global.Promise;
@@ -32,8 +33,8 @@ mongoose
     console.log("Conexion a la bd hospital establecida exitosamente");
 
     //Creacion del servidor
-    server.listen(port, () => {
-      console.log("Servidor corriendo en el puerto 3700");
+    server.listen(exp.get('port'), () => {
+      console.log(`Servidor corriendo en el puerto ${exp.get('port')}`);
       
     });
   })
