@@ -47,7 +47,8 @@ var controller = {
         
         var id=req.params.id;
         await Cita.remove({_id:id});
-            
+        res.status(200).json({ok:true,});
+
       },
 
       updateCita: async function (req, res) {
@@ -56,7 +57,8 @@ var controller = {
         var nueva_fecha=req.body.fecha; 
 
         await Cita.updateOne({_id:id}, {fecha:nueva_fecha});
-            
+        res.status(200).json({ok:true,});
+  
       }
     
     
