@@ -4,8 +4,12 @@ const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require("twilio")(accountSid, authToken);
 var faker = require("faker");
+const crypto = require('crypto')
 
 var controller = {
+
+//API TWILIO
+
   getToken: function (req, res) {
     const AccessToken = require("twilio").jwt.AccessToken;
     const VideoGrant = AccessToken.VideoGrant;
@@ -81,6 +85,22 @@ var controller = {
 
    
   },
+
+  //API ZOOM
+
+  getTokenZoom: function (req, res) {
+    
+    const timestamp = new Date().getTime() - 30000
+    const msg = Buffer.from(process.env.API_KEY + req.body.meetingNumber + timestamp + req.body.role).toString('base64')
+    const hash = crypto.createHmac('sha256', process.env.API_SECRET).update(msg).digest('base64')
+    const signature = Buffer.from(`${process.env.API_KEY}.${req.body.meetingNumber}.${timestamp}.${req.body.role}.${hash}`).toString('base64')
+
+    res.json({
+      signature: signature
+    })
+
+  }
+
 };
 
 module.exports = controller;
