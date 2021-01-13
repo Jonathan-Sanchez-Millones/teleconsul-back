@@ -9,7 +9,9 @@ var controller = {
 
     login: async function (req,res){
         
-        const{email,password}=req.body;
+        try {
+            
+            const{email,password}=req.body;
         console.log(email,password);
         const doctor= await Doctor.findOne({email,password})
         if(!doctor){
@@ -29,6 +31,10 @@ var controller = {
         })
         res.json({token})
         }
+        } catch (error) {
+            res.status(401).send(error);
+        }
+        
     },
 
     getUserByToken: async function(req,res){
@@ -48,6 +54,7 @@ var controller = {
         }
         else{
             const paciente=await Paciente.findById(req.Id);
+            if(!paciente) return res.status(401).send("Usuario no existente");
             res.status(200).json(paciente)
         }
         
