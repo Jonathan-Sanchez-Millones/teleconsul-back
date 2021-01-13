@@ -14,7 +14,7 @@ router.get('/video/getRooms',VideocallController.getRooms);
 
 //ZOOM
 router.post('/video/token-zoom',VideocallController.getTokenZoom);
-router.get('/video/oauthtoken-zoom',VideocallController.getOauthTokenZoom);
+router.post('/video/createRoom-zoom',VideocallController.createRoomZoom);
 
 
 module.exports = router;
