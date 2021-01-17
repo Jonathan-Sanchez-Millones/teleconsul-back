@@ -46,7 +46,7 @@ var controller = {
       deleteCita: async function (req, res) {
         
         var id=req.params.id;
-        const cita = await Cita.find({_id:id})
+        const cita = await Cita.findOne({_id:id})
         .lean().exec(function (err, result) {
 
           if(result){
