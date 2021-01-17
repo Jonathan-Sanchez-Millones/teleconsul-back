@@ -1,5 +1,5 @@
 "use strict";
-
+const BackupCita = require("../models/backupcita");
 const Cita = require("../models/cita");
 const Encuesta = require("../models/encuesta");
 const moment = require("moment");
@@ -46,6 +46,24 @@ var controller = {
       deleteCita: async function (req, res) {
         
         var id=req.params.id;
+        const cita = await Cita.find({_id:id})
+        .lean().exec(function (err, result) {
+
+          if(result){
+              
+              let backupcita = new BackupCita;
+              backupcita.doctor = result.doctor;
+              backupcita.paciente = result.paciente;
+              backupcita.fecha = result.fecha;
+              backupcita.razon = result.razon;
+
+              backupcita.save();
+              
+          }else{
+            console.log(err);
+          }
+      });
+      
         await Cita.remove({_id:id});
         res.status(200).json({ok:true,});
 

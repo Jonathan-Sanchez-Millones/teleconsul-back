@@ -7,7 +7,7 @@ var _ = require('underscore');
 
 var controller = {
     
-    saveMedication: function (req, res) {
+      saveMedication: function (req, res) {
     
         const { encuesta, medicamentos, indicaciones} = req.body
 
