@@ -51,7 +51,7 @@ var controller = {
 
           if(result){
               
-              let backupcita = new BackupCita;
+              let backupcita = new BackupCita();
               backupcita.doctor = result.doctor;
               backupcita.paciente = result.paciente;
               backupcita.fecha = result.fecha;
