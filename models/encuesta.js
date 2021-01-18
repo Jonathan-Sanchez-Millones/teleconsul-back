@@ -33,7 +33,21 @@ var EncuestaSchema = Schema({
     verde: Number,
     amarillo: Number,
     naranja: Number,
-    rojo: Number
+    rojo: Number,
+    colorTemperatura: String,
+    colorGlucosa: String,
+    colorFrecuenciaArterial: String,
+    colorFrecuenciaRespiratoria: String,
+    colorPresionArterialDiastolica: String,
+    colorPresionArterialSistolica: String,
+    colorDolor: String,
+    colorSangradoVagina: String,
+    colorSangradoHerida: String,
+    colorColoracionHerida: String,
+    colorTipoMolestiaMiccion: String,
+    colorVecesDefecaDia: String,
+    colorTexturaHeces: String
+
 
 });
 
