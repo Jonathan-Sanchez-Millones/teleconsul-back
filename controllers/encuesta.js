@@ -488,7 +488,6 @@ var controller = {
     }
     encuesta.estado = estado;
     encuesta.recomendacion=recomendacion;
-    encuesta.created_at = moment().unix();
     encuesta.verde=verde;
     encuesta.amarillo=amarillo;
     encuesta.naranja=naranja;
@@ -506,6 +505,8 @@ var controller = {
     encuesta.colorTipoMolestiaMiccion=colorTipoMolestiaMiccion;
     encuesta.colorVecesDefecaDia=colorVecesDefecaDia;
     encuesta.colorTexturaHeces=colorTexturaHeces;
+    encuesta.created_at = moment().unix();
+
     console.log(encuesta);
     encuesta.save();
     
