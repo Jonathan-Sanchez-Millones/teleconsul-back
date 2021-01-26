@@ -106,25 +106,13 @@ var controller = {
 
   createRoomZoom: async function (req,res) {
     
-    /*const ruta = await fetch(`https://zoom.us/oauth/authorize?response_type=code&
-    client_id=${process.env.clientID}&redirect_uri=https://devnknown.github.io/telemedicine-front/meet`,
-    {method:'GET',
-    redirect: `https://zoom.us/oauth/authorize?response_type=code&client_id=${process.env.clientID}&redirect_uri=https://devnknown.github.io/telemedicine-front/meet`})
-    
-   if (req.query.code){
-    console.log("lo logré");
-    console.log(req.query.code);
-   }
-   console.log("entre");
-   res.redirect('https://zoom.us/oauth/authorize?response_type=code&client_id=' + process.env.clientID + '&redirect_uri=https://devnknown.github.io/telemedicine-front/meet')
-    */
    const payload = {
     iss: process.env.API_KEY,
     exp: ((new Date()).getTime() + 5000)
   };
   
   const token = jwt.sign(payload, process.env.API_SECRET);
-  
+  console.log(token);
    
     const {topic} = req.body;
 
@@ -138,9 +126,7 @@ var controller = {
       body:JSON.stringify(todo),
       headers:{"Content-Type":"application/json","Authorization":`Bearer ${token}`}
     })
-    //console.log(resp);
     const respuesta=await resp.json();
-    console.log(respuesta);
 
     res.status(200).json(respuesta);
   }
