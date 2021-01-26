@@ -7,6 +7,7 @@
 const crypto = require('crypto')
 //const request = require('request')
 const fetch = require('node-fetch')
+const jwt=require('jsonwebtoken');
 
 var controller = {
 
@@ -109,16 +110,23 @@ var controller = {
     client_id=${process.env.clientID}&redirect_uri=https://devnknown.github.io/telemedicine-front/meet`,
     {method:'GET',
     redirect: `https://zoom.us/oauth/authorize?response_type=code&client_id=${process.env.clientID}&redirect_uri=https://devnknown.github.io/telemedicine-front/meet`})
-    */
-   if (!req.query.code){
-    console.log("entre");
-    res.redirect('https://zoom.us/oauth/authorize?response_type=code&client_id=' + process.env.clientID + '&redirect_uri=https://sistema-oncologico.herokuapp.com/api/video/createRoom-zoom')
-   }
-   else{
+    
+   if (req.query.code){
     console.log("lo logré");
-   console.log(req.query.code);
+    console.log(req.query.code);
    }
-    /*const {topic} = req.body;
+   console.log("entre");
+   res.redirect('https://zoom.us/oauth/authorize?response_type=code&client_id=' + process.env.clientID + '&redirect_uri=https://devnknown.github.io/telemedicine-front/meet')
+    */
+   const payload = {
+    iss: process.env.API_KEY,
+    exp: ((new Date()).getTime() + 5000)
+  };
+  
+  const token = jwt.sign(payload, process.env.API_SECRET);
+  
+   
+    const {topic} = req.body;
 
     let todo = {
 
@@ -128,13 +136,13 @@ var controller = {
     const resp = await fetch('https://api.zoom.us/v2/users/jonathan.sanchez3@unmsm.edu.pe/meetings',{
       method:'POST',
       body:JSON.stringify(todo),
-      headers:{"Content-Type":"application/json","Authorization":`Bearer ${process.env.token_oauth}`}
+      headers:{"Content-Type":"application/json","Authorization":`Bearer ${token}`}
     })
     //console.log(resp);
     const respuesta=await resp.json();
     console.log(respuesta);
 
-    res.status(200).json(respuesta);*/
+    res.status(200).json(respuesta);
   }
 
   }
