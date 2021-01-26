@@ -14,7 +14,6 @@ var router = express.Router();
 
 //ZOOM
 router.post('/video/token-zoom',VideocallController.getTokenZoom);
-router.post('/video/createRoom-zoom',VideocallController.createRoomZoom);
-
+router.get('/video/createRoom-zoom',VideocallController.createRoomZoom);
 
 module.exports = router;

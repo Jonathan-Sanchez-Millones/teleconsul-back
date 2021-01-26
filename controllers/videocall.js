@@ -105,7 +105,18 @@ var controller = {
 
   createRoomZoom: async function (req,res) {
     
-   const {topic} = req.body;
+    /*const ruta = await fetch(`https://zoom.us/oauth/authorize?response_type=code&
+    client_id=${process.env.clientID}&redirect_uri=https://devnknown.github.io/telemedicine-front/meet`,
+    {method:'GET',
+    redirect: `https://zoom.us/oauth/authorize?response_type=code&client_id=${process.env.clientID}&redirect_uri=https://devnknown.github.io/telemedicine-front/meet`})
+    */
+   if (!req.query.code){
+    res.redirect('https://zoom.us/oauth/authorize?response_type=code&client_id=' + process.env.clientID + '&redirect_uri=https://sistema-oncologico.herokuapp.com/api/video/createRoom-zoom')
+   }
+   else{
+   console.log(req.query.code);
+   }
+    /*const {topic} = req.body;
 
     let todo = {
 
@@ -121,7 +132,7 @@ var controller = {
     const respuesta=await resp.json();
     console.log(respuesta);
 
-    res.status(200).json(respuesta);
+    res.status(200).json(respuesta);*/
   }
 
   }

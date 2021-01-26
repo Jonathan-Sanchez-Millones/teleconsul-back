@@ -49,5 +49,6 @@ app.use('/api',videocall_routes);
 app.use('/api',paciente_routes);
 app.use('/uploads',express.static(path.resolve('uploads')));
 
+
 //exportar
 module.exports=app;
