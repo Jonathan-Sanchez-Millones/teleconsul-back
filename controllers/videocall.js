@@ -1,16 +1,16 @@
 "use strict";
 
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const client = require("twilio")(accountSid, authToken);
-var faker = require("faker");
+//const accountSid = process.env.TWILIO_ACCOUNT_SID;
+//const authToken = process.env.TWILIO_AUTH_TOKEN;
+//const client = require("twilio")(accountSid, authToken);
+//var faker = require("faker");
 const crypto = require('crypto')
-const request = require('request')
+//const request = require('request')
 const fetch = require('node-fetch')
 
 var controller = {
 
-//API TWILIO
+/*API TWILIO
 
   getToken: function (req, res) {
     const AccessToken = require("twilio").jwt.AccessToken;
@@ -55,7 +55,7 @@ var controller = {
       .then((participants) => {
         console.log(participants.length);
       });
-  },*/
+  },
 
   
 
@@ -86,7 +86,7 @@ var controller = {
       res.status(200).json(salas);
 
    
-  },
+  }, */
 
   //API ZOOM
 
