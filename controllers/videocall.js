@@ -111,9 +111,11 @@ var controller = {
     redirect: `https://zoom.us/oauth/authorize?response_type=code&client_id=${process.env.clientID}&redirect_uri=https://devnknown.github.io/telemedicine-front/meet`})
     */
    if (!req.query.code){
+    console.log("entre");
     res.redirect('https://zoom.us/oauth/authorize?response_type=code&client_id=' + process.env.clientID + '&redirect_uri=https://sistema-oncologico.herokuapp.com/api/video/createRoom-zoom')
    }
    else{
+    console.log("lo logré");
    console.log(req.query.code);
    }
     /*const {topic} = req.body;
